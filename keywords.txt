@@ -1,10 +1,14 @@
-# Datatypes (KEYWORD1)
+# Datatypes
 AbsMouse	KEYWORD1
 
-# Methods and Functions (KEYWORD2)
+# Methods and Functions
 init	KEYWORD2
 move	KEYWORD2
 press	KEYWORD2
 release	KEYWORD2
 report	KEYWORD2
 
+# Constants
+MOUSE_LEFT	LITERAL1
+MOUSE_RIGHT	LITERAL1
+MOUSE_MIDDLE	LITERAL1
