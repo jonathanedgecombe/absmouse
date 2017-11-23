@@ -1,0 +1,10 @@
+# Datatypes (KEYWORD1)
+AbsMouse	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+init	KEYWORD2
+move	KEYWORD2
+press	KEYWORD2
+release	KEYWORD2
+report	KEYWORD2
+
