@@ -34,21 +34,13 @@ static const uint8_t HID_REPORT_DESCRIPTOR[] PROGMEM = {
 	0xC0               // End Collection
 };
 
-AbsMouse_::AbsMouse_(void) : _buttons(0), _x(0), _y(0), _width(32767), _height(32767), _autoReport(true)
+AbsMouse_::AbsMouse_(void) : _buttons(0), _x(0), _y(0)
 {
 	static HIDSubDescriptor descriptorNode(HID_REPORT_DESCRIPTOR, sizeof(HID_REPORT_DESCRIPTOR));
 	HID().AppendDescriptor(&descriptorNode);
 }
 
-void AbsMouse_::buttons(uint8_t b)
-{
-	if (b != _buttons)
-	{
-		_buttons = b;
-	}
-}
-
-void AbsMouse_::init(int width, int height, bool autoReport)
+void AbsMouse_::init(uint16_t width, uint16_t height, bool autoReport)
 {
 	_width = width;
 	_height = height;
@@ -66,10 +58,10 @@ void AbsMouse_::report(void)
 	HID().SendReport(1, buffer, 5);
 }
 
-void AbsMouse_::move(int x, int y)
+void AbsMouse_::move(uint16_t x, uint16_t y)
 {
-	_x = (int) ((32767l * ((long) x)) / _width);
-	_y = (int) ((32767l * ((long) y)) / _height);
+	_x = (uint16_t) ((32767l * ((uint32_t) x)) / _width);
+	_y = (uint16_t) ((32767l * ((uint32_t) y)) / _height);
 
 	if (_autoReport) {
 		report();
@@ -78,7 +70,7 @@ void AbsMouse_::move(int x, int y)
 
 void AbsMouse_::press(uint8_t button) 
 {
-	buttons(_buttons | button);
+	_buttons |= button;
 
 	if (_autoReport) {
 		report();
@@ -87,7 +79,7 @@ void AbsMouse_::press(uint8_t button)
 
 void AbsMouse_::release(uint8_t button)
 {
-	buttons(_buttons & ~button);
+	_buttons &= ~button;
 
 	if (_autoReport) {
 		report();

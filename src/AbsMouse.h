@@ -17,18 +17,17 @@ class AbsMouse_
 {
 private:
 	uint8_t _buttons;
-	int _x;
-	int _y;
-	long _width;
-	long _height;
+	uint16_t _x;
+	uint16_t _y;
+	uint32_t _width;
+	uint32_t _height;
 	bool _autoReport;
-	void buttons(uint8_t b);
 
 public:
 	AbsMouse_(void);
-	void init(int width = 32767, int height = 32767, bool autoReport = true);
+	void init(uint16_t width = 32767, uint16_t height = 32767, bool autoReport = true);
 	void report(void);
-	void move(int x, int y);
+	void move(uint16_t x, uint16_t y);
 	void press(uint8_t b = MOUSE_LEFT);
 	void release(uint8_t b = MOUSE_LEFT);
 };
