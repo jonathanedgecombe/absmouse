@@ -1,5 +1,5 @@
 # absmouse
-Absolute positioning USB HID mouse library for Arduino Micro/Leonardo
+Absolute positioning USB HID mouse library for Arduino devices with USB capabilities.
 
 ## Example use
 ```c++
