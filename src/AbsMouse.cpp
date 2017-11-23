@@ -34,7 +34,7 @@ static const uint8_t HID_REPORT_DESCRIPTOR[] PROGMEM = {
 	0xC0               // End Collection
 };
 
-AbsMouse_::AbsMouse_(void) : _buttons(0), _x(0), _y(0), _width(32767), _height(32767)
+AbsMouse_::AbsMouse_(void) : _buttons(0), _x(0), _y(0), _width(32767), _height(32767), _autoReport(true)
 {
 	static HIDSubDescriptor descriptorNode(HID_REPORT_DESCRIPTOR, sizeof(HID_REPORT_DESCRIPTOR));
 	HID().AppendDescriptor(&descriptorNode);
@@ -48,10 +48,11 @@ void AbsMouse_::buttons(uint8_t b)
 	}
 }
 
-void AbsMouse_::init(int width, int height)
+void AbsMouse_::init(int width, int height, bool autoReport)
 {
 	_width = width;
 	_height = height;
+	_autoReport = autoReport;
 }
 
 void AbsMouse_::report(void)
@@ -69,16 +70,28 @@ void AbsMouse_::move(int x, int y)
 {
 	_x = (int) ((32767l * ((long) x)) / _width);
 	_y = (int) ((32767l * ((long) y)) / _height);
+
+	if (_autoReport) {
+		report();
+	}
 }
 
 void AbsMouse_::press(uint8_t button) 
 {
 	buttons(_buttons | button);
+
+	if (_autoReport) {
+		report();
+	}
 }
 
 void AbsMouse_::release(uint8_t button)
 {
 	buttons(_buttons & ~button);
+
+	if (_autoReport) {
+		report();
+	}
 }
 
 AbsMouse_ AbsMouse;

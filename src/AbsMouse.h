@@ -21,11 +21,12 @@ private:
 	int _y;
 	long _width;
 	long _height;
+	bool _autoReport;
 	void buttons(uint8_t b);
 
 public:
 	AbsMouse_(void);
-	void init(int width = 32767, int height = 32767);
+	void init(int width = 32767, int height = 32767, bool autoReport = true);
 	void report(void);
 	void move(int x, int y);
 	void press(uint8_t b = MOUSE_LEFT);

@@ -13,9 +13,7 @@ void loop() {
   // do some stuff
   AbsMouse.move(500, 200);
   AbsMouse.press(MOUSE_LEFT);
-  AbsMouse.report();
   AbsMouse.release(MOUSE_LEFT);
-  AbsMouse.report();
   // do some other stuff
 }
 ```
