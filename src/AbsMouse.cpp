@@ -30,6 +30,14 @@ static const uint8_t HID_REPORT_DESCRIPTOR[] PROGMEM = {
 	0x75, 0x10,        //     Report Size (16)
 	0x95, 0x02,        //     Report Count (2)
 	0x81, 0x02,        //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+	0x09, 0x38,        //     Usage (Wheel)
+	0x15, 0x81,        //     Logical Minimum (-127)
+	0x25, 0x7F,        //     Logical Maximum (127)
+	0x35, 0x81,        //     Physical Minimum (-127)
+	0x45, 0x7F,        //     Physical Maximum (127)
+	0x75, 0x08,        //     Report Size (8)
+	0x95, 0x01,        //     Report Count (1)
+	0x81, 0x06,        //     Input (Data,Var,Rel)
 	0xC0,              //   End Collection
 	0xC0               // End Collection
 };
@@ -49,19 +57,21 @@ void AbsMouse_::init(uint16_t width, uint16_t height, bool autoReport)
 
 void AbsMouse_::report(void)
 {
-	uint8_t buffer[5];
+	uint8_t buffer[6];
 	buffer[0] = _buttons;
 	buffer[1] = _x & 0xFF;
 	buffer[2] = (_x >> 8) & 0xFF;
 	buffer[3] = _y & 0xFF;
 	buffer[4] = (_y >> 8) & 0xFF;
-	HID().SendReport(1, buffer, 5);
+	buffer[5] = _scroll;
+	HID().SendReport(1, buffer, 6);
 }
 
-void AbsMouse_::move(uint16_t x, uint16_t y)
+void AbsMouse_::move(uint16_t x, uint16_t y, int8_t scroll)
 {
 	_x = (uint16_t) ((32767l * ((uint32_t) x)) / _width);
 	_y = (uint16_t) ((32767l * ((uint32_t) y)) / _height);
+	_scroll = scroll;
 
 	if (_autoReport) {
 		report();
